@@ -2,6 +2,11 @@
 const {
   Model
 } = require('sequelize');
+
+
+const bcrypt = require('bcrypt');
+const {SALT} = require('../config/server_config');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -32,6 +37,16 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+  });
+
+  //triggers encyption
+  //                this user obj is the obj thats going to be created
+  //jiski req arhii h 
+  //these things inside the fxn occur before the usercreation
+  User.beforeCreate((user)=> {
+        // console.log(user);  
+        const encryptedPassword = bcrypt.hashSync(user.password,SALT);
+        user.password = encryptedPassword;
   });
   return User;
 };
