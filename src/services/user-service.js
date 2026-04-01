@@ -51,6 +51,24 @@ class UserService{
 
     }
 
+    //checking if token expired or not i.e. is authenticated or not
+    isAuthenticated(token){
+    try {
+        const response = this.verifyToken(token);
+        if(!response){
+            throw {error : 'Invalid token'};
+            throw error;
+        }
+        const user = this.userRepository.getById(response.id);
+        if(!user){
+            throw {error : 'No user with the corresponding token exists'};
+        }
+        return user.id;
+    } catch (error) {
+        console.log("Something went wrong in the AUTH process");
+        throw error;
+    }
+}
 
     createToken(user){//sync fxn can also work
         try {
