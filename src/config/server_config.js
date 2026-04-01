@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
 
-dotenv.config();
+
 //this will call the .env file
 
 module.exports = {

@@ -26,8 +26,35 @@ class UserService{
             
     //     }
     // }
+
+    async signIn(email,password){
+            try {
+                //step 1 -> fetch user using email
+                const user = await this.userRepository.getByEmail(email);
+
+                //step 2 -> comparing the password/checking
+                const passwordMatch = this.checkPassword(password,user.password);
+                if(!passwordMatch){
+                    console.log("Password doesnt match");
+                    throw {error : "Incorrect password"};
+                }
+
+                //step 3->if pass matched then create the token and sent it to the user
+
+                const newjwt = this.createToken({email : user.email , id:user.id});
+                return newjwt;
+
+            } catch (error) {
+                console.log("Something went wrong in the sign in process");
+                throw error;
+            }
+
+    }
+
+
     createToken(user){//sync fxn can also work
         try {
+            // console.log("JWT_KEY : ",JWT_KEY);
             const result = jwt.sign(user,JWT_KEY , {expiresIn : '1d'});
             return result;
         } catch (error) {

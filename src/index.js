@@ -1,7 +1,13 @@
+require('dotenv').config();
+
 const express = require('express');
+
 const app = express();
+
 const {PORT} = require('./config/server_config');
+
 const bodyParser = require('body-parser');
+
 const apiroutes = require('./routes/index');
 
 // const {User} = require('./models/index');
