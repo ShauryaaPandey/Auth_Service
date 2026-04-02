@@ -52,14 +52,14 @@ class UserService{
     }
 
     //checking if token expired or not i.e. is authenticated or not
-    isAuthenticated(token){
+    async isAuthenticated(token){
     try {
         const response = this.verifyToken(token);
         if(!response){
             throw {error : 'Invalid token'};
             throw error;
         }
-        const user = this.userRepository.getById(response.id);
+        const user = await this.userRepository.getById(response.id);
         if(!user){
             throw {error : 'No user with the corresponding token exists'};
         }
