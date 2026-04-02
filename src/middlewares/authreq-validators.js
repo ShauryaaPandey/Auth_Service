@@ -6,11 +6,24 @@ const validateUsersAuth = (req,res,next) => {
             message : "something went wrong ",
             err : "Email or password missing in the request",
 
-        }); 
-        next();
+        });
     }
+    next();
+}
+
+const validateAdminReq = (req,res,next)=> {
+    if(!req.body.id){
+        return res.status(400).json({
+            success : false,
+            data : {},
+            message : "something went wrong ",
+            err : "User id not given",
+        });
+    }
+    next();
 }
 
 module.exports = {
-    validateUsersAuth
+    validateUsersAuth,
+    validateAdminReq
 }
